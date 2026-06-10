@@ -9,9 +9,10 @@
     --color-secondary: var(--color-secondary);
     --secondary: var(--color-secondary);
     --second-color: color-mix(in srgb, var(--color-primary) 60%, white);
-    --color-dark-blue: var(--color-dark-blue);
-    --color-cyan: var(--color-cyan);
+    --color-dark: var(--color-dark);
+    --color-orange: var(--color-orange);
     --color-light-green: var(--color-light-green);
+    --color-body-text: var(--color-body-text);
 }
 
 @import "tailwindcss";
@@ -83,7 +84,7 @@
 
 
 body {
-    @apply text-sm md:text-base text-[#202020];
+    @apply text-sm md:text-base text-body-text;
 }
 
 h1 {
@@ -135,9 +136,9 @@ h6 {
 }
 
 .kt-btn-g{
-    @apply bg-radial-[at_0%_100%] from-dark-blue via-cyan via-72% to-light-green;
+    @apply bg-radial-[at_0%_170%] from-secondary via-primary via-72% to-terrtiary; 
     &:hover{
-        @apply bg-radial-[at_100%_0%] from-dark-blue via-cyan via-72% to-light-green;
+        @apply bg-radial-[at_170%_0%] from-secondary via-primary via-72% to-terrtiary;
     }
 }
 
@@ -228,18 +229,22 @@ h6 {
 
 
 header {
+    @apply px-4 lg:px-6 xl:px-8 py-4 lg:py-7 2xl:px-12 transition-all;
+    .headerSticky &{
+        @apply py-2 lg:py-4 lg:px-3 xl:px-4 2xl:px-6 transition-all;
+    }
     .main-menu {
+        @apply xl:gap-5 2xl:gap-15 transition-all;
+        .headerSticky &{
+            @apply xl:gap-4 2xl:gap-7 transition-all;
+        }
         li {
             &>a {
                 @apply text-[#323A5B];
-
-                .home:not(.headerSticky) & {
-                    @apply text-white;
-                }
             }
 
             &.current-menu-item>a {
-                @apply font-semibold;
+                @apply font-semibold text-primary;
             }
 
             .sub-menu {
@@ -308,14 +313,6 @@ header {
         @apply flex justify-center mt-4;
     }
 }
-.customer-feedback-slider{
-    button.owl-dot {
-        @apply before:border-[#132341];
-        span{
-            @apply bg-[#132341];
-        }
-    }
-}
 
 
 .photo-gallery-slider .owl-item{
@@ -336,6 +333,12 @@ header {
         @apply opacity-50;
         &.active.center{
             @apply opacity-100;
+        }
+    }
+    button.owl-dot {
+        @apply before:border-white;
+        span{
+            @apply bg-white;
         }
     }
 }

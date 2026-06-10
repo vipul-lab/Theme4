@@ -11,13 +11,13 @@
 
 <?php
 
-global $primary_color, $secondary_color, $territory_color, $body_text_color;
+global $primary_color, $secondary_color, $territory_color, $body_color;
 global $color_1, $color_2, $color_3;
 
 $primary_color = get_field( 'primary_color', 'option' );
 $secondary_color = get_field( 'secondary_color', 'option' );
 $territory_color = get_field( 'territory_color', 'option' );
-$body_text_color = get_field( 'body_text_color', 'option' );
+$body_color = get_field( 'body_color', 'option' );
 
 // Get group field
 $gradient_color_palette = get_field('gradient_color_palette', 'option');
@@ -34,15 +34,16 @@ $color_3 = $gradient_color_palette['color_3'] ?? '';
     --color-primary: <?php echo esc_html($primary_color); ?>;
     --color-secondary: <?php echo esc_html($secondary_color); ?>;
     --color-terrtiary: <?php echo esc_html($territory_color); ?>;
-    --color-dark-blue: <?php echo esc_html($color_1); ?>;
-    --color-cyan: <?php echo esc_html($color_2); ?>;
+    --color-orange: <?php echo esc_html($color_1); ?>;
+    --color-dark: <?php echo esc_html($color_2); ?>;
     --color-light-green: <?php echo esc_html($color_3); ?>;
+    --color-body-text: <?php echo esc_html($body_color); ?>;
 }
 </style>
 </head>
 <body <?php body_class('group/body'); ?>>
 <!-- Header section start h-c-100 -->
-<header class="top-0 z-100 px-4 lg:px-6 xl:px-8 py-4 lg:py-7 2xl:px-12  w-full group-[.headerSticky]/body:shadow <?php echo is_front_page()? 'bg-transparent group-[.headerSticky]/body:bg-white fixed': 'bg-white sticky'; ?>">
+<header class="top-0 z-100 w-full group-[.headerSticky]/body:shadow <?php echo is_front_page()? 'bg-transparent group-[.headerSticky]/body:bg-white fixed': 'bg-white sticky'; ?>">
     <div class="flex items-center justify-between gap-4.5 2xl:gap-10">
 
       <?php if ( is_front_page() ) : ?>
@@ -63,7 +64,7 @@ $color_3 = $gradient_color_palette['color_3'] ?? '';
         <img style="height: 40px;" src="<?php echo get_field('website_logo_dark', 'option'); ?>" alt="<?php echo get_bloginfo(); ?> Logo">
       </a>
 
-      <ul class="main-menu xl:flex items-center gap-4 xl:gap-5 2xl:gap-15 ml-auto hidden text-lg <?php echo is_front_page() ? 'home-page-header' : ''; ?>">
+      <ul class="main-menu xl:flex items-center gap-4 ml-auto hidden text-lg <?php echo is_front_page() ? 'home-page-header' : ''; ?>">
         <?php
         wp_nav_menu(
             array(
@@ -82,7 +83,7 @@ $color_3 = $gradient_color_palette['color_3'] ?? '';
         if ($call_now && $call_now['call_now_display']) :
             $contact_number = $call_now['contact_number'];
             if ($contact_number) : ?>
-                <a href="tel:<?php echo esc_attr($contact_number); ?>" class="hidden md:flex kt-btn bg-dark-blue/50 hover:bg-dark-blue">
+                <a href="tel:<?php echo esc_attr($contact_number); ?>" class="hidden md:flex kt-btn bg-secondary/70 hover:bg-secondary">
                     <span>Call Now</span>
                 </a>
             <?php endif;

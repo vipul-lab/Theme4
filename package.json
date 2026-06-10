@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx @tailwindcss/cli -i ./wp-content/themes/bumble-bee/assets/css/input.css -o ./wp-content/themes/bumble-bee/assets/css/output.css --watch"
+    "css": "npx tailwindcss -i ./wp-content/themes/bumble-bee/assets/css/input.css -o wp-content/themes/bumble-bee/assets/css/output.css --watch",
+    "sync": "browser-sync start --config bs-config.js",
+    "dev": "concurrently \"npm run css\" \"npm run sync\""
   },
   "keywords": [],
   "author": "",
@@ -12,6 +14,12 @@
   "type": "commonjs",
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.18",
-    "tailwindcss": "^4.1.18"
+    "@tailwindcss/postcss": "^4.3.0",
+    "browser-sync": "^3.0.4",
+    "concurrently": "^10.0.3",
+    "nodemon": "^3.1.14",
+    "postcss": "^8.5.15",
+    "postcss-cli": "^11.0.1",
+    "tailwindcss": "^4.3.0"
   }
 }

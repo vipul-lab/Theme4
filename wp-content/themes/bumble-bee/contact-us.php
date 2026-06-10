@@ -8,39 +8,31 @@ get_header();
 
 
 <?php 
-$banner_posts = get_field('page_banner', 'option'); 
-$current_id = get_the_ID();
-$show_banner = false;
-if (!empty($banner_posts)) {
-    foreach ($banner_posts as $post_item) {
-        $post_id = is_object($post_item) ? $post_item->ID : $post_item;
-        if ($post_id == $current_id) {
-            $show_banner = true;
-            break;
-        }
-    }
-}
-if ($show_banner) :
-    $thumbnail = get_the_post_thumbnail_url($current_id, 'full');
-    $default_image = get_template_directory_uri() . '/assets/images/default-banner.jpg';
-    $bg_image = $thumbnail ? $thumbnail : $default_image;
+$hero_banner_section = get_field('hero_banner_section');
+if (!empty($hero_banner_section)):
+    $display = $hero_banner_section['display'] ?? false;
+    if ($display):
+        $image   = $hero_banner_section['image'] ?? '';
+        $tagline = $hero_banner_section['tagline'] ?? '';
+        $title   = $hero_banner_section['title'] ?? '';
 ?>
+
 <section class="pt-8 md:pt-12 lg:pt-18 xl:pt-20 2xl:pt-24 pb-8 md:pb-12 lg:pb-18 xl:pb-20 2xl:pb-24 bg-cover relative"
-    style="background-image: url('<?php echo esc_url($bg_image); ?>');">
+    <?php if (!empty($image)) : ?> style="background-image: url('<?php echo esc_url($image); ?>');" <?php endif; ?>>
     <span class="bg-radial from-primary/0 to-primary absolute inset-0 mix-blend-multiply"></span>
     <div class="relative z-10 text-center max-w-175 mx-auto">
-        <?php if (is_single()) : ?>
-            <div>
-                <span class="kt-badge bg-white/30 text-white text-sm font-semibold">Blog</span>
-            </div>
+        <?php if (!empty($tagline)) : ?>
+        <p class="text-white mb-2"><?php echo esc_html($tagline); ?></p>
         <?php endif; ?>
         <h2 class="font-semibold text-white text-shadow-lg">
-            <?php the_title(); ?>
+            <?php echo !empty($title) ? esc_html($title) : get_the_title(); ?>
         </h2>
     </div>
 </section>
-
-<?php endif; ?>
+<?php 
+    endif;
+endif; 
+?>
 
 
 <?php if ( have_rows( 'contact', 'option' ) ) {
@@ -61,7 +53,7 @@ $business_google_location = get_sub_field( "business_google_location" );
 ?>
 <section class="pt-8 md:pt-12 lg:pt-18 xl:pt-20 2xl:pt-24">
     <div class="container grid grid-cols-12 gap-8">
-        <div class="rounded-[20px] p-4 sm:p-8 col-span-8 mx-auto relative z-1 w-full bg-radial-[at_0%_100%] from-dark-blue via-cyan via-72% to-light-green">
+        <div class="rounded-[20px] p-4 sm:p-8 col-span-8 mx-auto relative z-1 w-full bg-radial-[at_0%_170%] from-secondary via-primary via-72% to-terrtiary">
             <?php if($tagline != NULL){ ?>
             <div><span class="kt-badge kt-badge-secondary"><?php echo $tagline; ?></span></div>
             <?php } ?>
@@ -92,6 +84,10 @@ $business_google_location = get_sub_field( "business_google_location" );
                 <div class="flex flex-col md:col-span-2">
                     <input type="text" class="kt-input border-white! rounded-full! placeholder:text-white!" placeholder="Enter the typr of service you need here.">
                 </div>
+                <div class="flex gap-2 md:col-span-2">
+                  <input class="bg-transparent" type="checkbox" id="contact-tremscheckbox">
+                  <label class="text-white" for="contact-tremscheckbox">Agree to the <a target="_blank" href="#">Terms &amp; Conditions</a></label>
+                </div>
                 <button type="submit" class="kt-btn bg-white text-primary md:col-span-2">Send Message</button>
             </form>
             <div class="rounded-lg overflow-hidden">
@@ -104,7 +100,7 @@ $business_google_location = get_sub_field( "business_google_location" );
     </div>
 </section>
 
-<div class="container grid grid-cols-3 pt-8 md:pt-12 lg:pt-18 xl:pt-20 2xl:pt-24 pb-8 md:pb-12 lg:pb-18 xl:pb-20 2xl:pb-24">
+<div class="container grid grid-cols-3 pt-8 md:pt-12 lg:pt-18 xl:pt-20 2xl:pt-24 pb-8 md:pb-12 lg:pb-18 xl:pb-20 2xl:pb-24 text-gray-950">
     <div>
         <p><i class="fa-solid mr-2 fa-phone"></i> Phone</p>
         <?php if($contact_number != NULL){ ?>

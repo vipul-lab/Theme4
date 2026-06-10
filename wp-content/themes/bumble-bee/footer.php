@@ -45,7 +45,7 @@ if ($show_contact) :
 ?>
 <section class="<?php echo esc_attr($section_class); ?>">
   <div class="container grid grid-cols-12 gap-8">
-      <div class="col-span-8 bg-radial-[at_0%_100%] from-dark-blue via-cyan via-72% to-light-green p-14 rounded-3xl">
+      <div class="col-span-8 bg-radial-[at_0%_170%] from-secondary via-primary via-72% to-terrtiary p-14 rounded-3xl">
         <div class="xl:max-w-112.5 text-white">
           <h2 class="font-bold">Contact Us</h2>
           <p class="">Call or Text Us</p>
@@ -119,7 +119,7 @@ if ( $newsletter_display ) {
       <p class="text-lg mb-2"><?php echo $sub_title; ?></p>
       <?php } ?>
       <?php if($title != NULL){ ?>
-      <p class="font-bold text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl"><?php echo $title; ?></p>
+      <p class="font-bold text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl text-gray-950"><?php echo $title; ?></p>
       <?php } ?>
     </div>
 
@@ -140,7 +140,7 @@ if ( $newsletter_display ) {
 </div>
 
 
-<footer class="mx-4 rounded-3xl mt-4 bg-dark-blue text-white py-8 md:py-12 lg:py-18">
+<footer class="mx-4 rounded-3xl mt-4 bg-[#202125] text-white py-8 md:py-12 lg:py-18">
   <div class="container">
     <div class="grid grid-cols-12 gap-7">
       <div class="col-span-12 xl:col-span-4 xl:text-left text-center">

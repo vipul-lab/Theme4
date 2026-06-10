@@ -25,7 +25,7 @@ get_header();
 $thumbnail = get_the_post_thumbnail_url(get_the_ID(), 'full');
 
 // fallback image
-$default_image = get_template_directory_uri() . '/assets/images/default-banner.jpg';
+$default_image = get_template_directory_uri() . '/assets/images/default-banner.png';
 
 // final image
 $bg_image = $thumbnail ? $thumbnail : $default_image;
@@ -42,7 +42,7 @@ $bg_image = $thumbnail ? $thumbnail : $default_image;
     </div>
 </section>
 
-<section class="pt-8 md:pt-12 lg:pt-18 xl:pt-20 2xl:pt-24">
+<section class="pt-8 md:pt-12 lg:pt-18 xl:pt-20 2xl:pt-24 pb-8 md:pb-12 lg:pb-18 xl:pb-20 2xl:pb-24">
     <?php 
     $iframe = get_field('sign_inup_iframe', 'option');
 

@@ -163,6 +163,7 @@ $second_color  = lighten_color($base_color, 80);
     // DEFAULT: CURRENT PAGE DATA
     // =========================
     $title       = get_sub_field("title");
+    $description       = get_sub_field("description");
     $image       = get_sub_field("image");
     $link        = get_sub_field("link");
     $box_list    = get_sub_field("box_list");
@@ -175,6 +176,7 @@ $second_color  = lighten_color($base_color, 80);
                 if( get_row_layout() == 'home_banner' ){
                     // OVERRIDE with HOME DATA
                     $title       = get_sub_field("title");
+                    $description       = get_sub_field("description");
                     $image       = get_sub_field("image");
                     $link        = get_sub_field("link");
                     $box_list    = get_sub_field("box_list");
@@ -185,48 +187,49 @@ $second_color  = lighten_color($base_color, 80);
     }
 ?>
 
-<section class="h-screen lg:max-h-195 relative text-white flex flex-col bg-cover bg-center pt-30"
+<section class="h-screen lg:max-h-220 relative text-white flex flex-col bg-cover bg-top pt-30"
 <?php if ($image) { ?>style="background-image: url(<?php echo esc_url($image); ?>);"<?php } ?>>
-    <div class="px-4 lg:px-6 xl:px-8 2xl:px-12 relative z-10 flex-1 flex items-center mb-10">
-        <div class="max-w-235 max-lg:text-center max-lg:mx-auto">
-
+    <div class="px-4 lg:px-6 xl:px-8 2xl:px-12 relative z-10 flex-1 flex flex-col justify-end">
+        <div class="max-w-[600px] text-center mx-auto">
             <?php if ($title): ?>
-                <h2 class="font-bold my-5 text-shadow-lg ">
+                <h2 class="font-bold my-5 text-shadow-lg">
                     <?php echo wp_kses($title, array('br' => array())); ?>
                 </h2>
             <?php endif; ?>
-
-            <?php if ($link): ?>
-                <div class="mt-10">
-                    <a href="<?php echo esc_url($link['url']); ?>" class="kt-btn kt-btn-g">
-                        <?php echo esc_html($link['title']); ?>
-                    </a>
-                </div>
+            <?php if ($description): ?>
+                <p class="text-lg">
+                    <?php echo wp_kses($description, array('br' => array())); ?>
+                </p>
             <?php endif; ?>
-
         </div>
+        <?php if (!empty($box_list)): ?>
+        <div class="text-center mt-8 mb-12.5">
+            <div class="bg-[#1f0a01]/40 rounded-full backdrop-blur-sm px-4 lg:px-6 xl:px-8 2xl:px-12 py-4 text-center inline-flex flex-col lg:flex-row text-left gap-7.5 2xl:gap-16 text-white z-10">
+                <?php foreach ($box_list as $index => $row): ?>
+                    <div class="flex items-center gap-5">
+                        <img src="<?php echo esc_html($row['icon']); ?>">
+                        <div>
+                            <?php if (!empty($row['title'])): ?>
+                            <p class="text-xl font-semibold">
+                                <?php echo esc_html($row['title']); ?>
+                            </p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+                <?php if ($link): ?>
+                <a href="<?php echo esc_url($link['url']); ?>" class="kt-btn kt-btn-g">
+                    <?php echo esc_html($link['title']); ?>
+                </a>
+                <?php endif; ?>
+            </div>
+        </div>
+        <?php endif; ?>
     </div>
     <!-- =========================
          BOX LIST
     ========================== -->
-    <?php if (!empty($box_list)): ?>
-    <div class="bg-black/30 px-4 lg:px-6 xl:px-8 2xl:px-12 py-4 text-center">
-        <div class="inline-flex flex-col lg:flex-row text-left gap-7.5 2xl:gap-16 text-white z-10">
-            <?php foreach ($box_list as $index => $row): ?>
-                <div class="flex items-center gap-5">
-                    <img src="<?php echo esc_html($row['icon']); ?>">
-                    <div>
-                        <?php if (!empty($row['title'])): ?>
-                        <p class="text-xl font-semibold">
-                            <?php echo esc_html($row['title']); ?>
-                        </p>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-    <?php endif; ?>
+    
 
 </section>
 
@@ -312,7 +315,8 @@ if($display):
         ?>
 
         <a href="<?php the_permalink(); ?>" class="rounded-[20px] relative block overflow-hidden group hover:-translate-y-5 translate-y-0 group-hover:xl:translate-y-0 duration-1000 transition-all group-hover:transition-all">
-            <span class="hidden xl:block z-1 bg-[linear-gradient(180deg,rgba(255,255,255,0)_50%,rgba(19,35,65,0.7)_63%)] group-hover:bg-[linear-gradient(180deg,#25d7ff00_0%,#25d7ff80_30%)] absolute inset-0"></span>
+            <span class="hidden xl:block z-1 bg-linear-to-b from-dark/0 from-30% to-dark/80 to-63%
+                group-hover:from-primary/10 group-hover:from-0 group-hover:to-primary/60 absolute inset-0"></span>
             <?php if ($thumb) : ?>
                 <img src="<?php echo esc_url($thumb); ?>" 
                     alt="<?php echo esc_attr(get_the_title()); ?>"
@@ -374,10 +378,10 @@ $section_classes = paddingClasses($spacing);
     <div class="container grid grid-cols-12 gap-y-4 xl:gap-15">
         <div class="col-span-12 xl:col-span-5">
             <?php if (!empty($tagline)) : ?>
-                <div class="text-2xl"><?php echo esc_html($tagline); ?></div>
+                <div class="text-2xl text-gray-950"><?php echo esc_html($tagline); ?></div>
             <?php endif; ?>
             <?php if ($title != NULL) { ?>
-            <h4 class="font-medium my-2 leading-tight"><?php echo $title; ?></h4>
+            <h4 class="font-medium my-2 leading-tight text-gray-950"><?php echo $title; ?></h4>
             <?php } ?>
             <?php if ($description != NULL) { ?>
             <div class="space-y-5 mb-5">
@@ -404,10 +408,10 @@ $section_classes = paddingClasses($spacing);
             $item_description = $item['description'] ?? '';
             ?>
 
-            <div class="rounded-[20px] p-7.5 bg-terrtiary">
+            <div class="rounded-[20px] p-7.5 bg-terrtiary/20">
                 <img src="<?php echo esc_url($icon); ?>" alt="">
                 <?php if ($item_title): ?>
-                    <p class="text-lg xl:text-2xl my-3 font-bold">
+                    <p class="text-lg xl:text-2xl my-3 font-bold text-gray-950">
                         <?php echo esc_html($item_title); ?>
                     </p>
                 <?php endif; ?>
@@ -459,7 +463,7 @@ $section_classes = paddingClasses($spacing);
 <section class="px-4 <?php echo esc_attr($section_classes); ?>">
     <div class="text-center">
         <?php if ($title != NULL) { ?>
-        <h4 class="font-medium"><?php echo $title; ?></h4>
+        <h4 class="font-medium text-gray-950"><?php echo $title; ?></h4>
         <?php } ?>
         <?php if ($description != NULL) { ?>
         <div class="max-w-190 mx-auto"><?php echo $description; ?></div>
@@ -477,7 +481,11 @@ $section_classes = paddingClasses($spacing);
         ?>
         <div class="pt-10">
             <a href="<?php the_permalink(); ?>" class="rounded-[20px] relative block overflow-hidden group hover:-translate-y-5 translate-y-0 group-hover:xl:translate-y-0 duration-1000 transition-all group-hover:transition-all">
-                <span class="hidden xl:block z-1 bg-[linear-gradient(180deg,rgba(255,255,255,0)_50%,rgba(19,35,65,0.7)_63%)] group-hover:bg-[linear-gradient(180deg,#25d7ff00_0%,#25d7ff80_30%)] absolute inset-0"></span>
+                <span class="hidden xl:block z-1 
+                bg-linear-to-b from-dark/0 from-30% to-dark/80 to-63%
+                group-hover:from-primary/10 group-hover:from-0 group-hover:to-primary/60
+                
+                 absolute inset-0"></span>
                 <?php if (has_post_thumbnail()) : ?>
                     <img 
                         src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>" 
@@ -544,7 +552,7 @@ $section_classes = paddingClasses($spacing);
 
         <!-- TITLE -->
         <?php if(!empty($title)): ?>
-            <h4 class="text-center font-medium mb-3">
+            <h4 class="text-center font-medium mb-3 text-gray-950">
                 <?php echo esc_html($title); ?>
             </h4>
         <?php endif; ?>
@@ -714,9 +722,9 @@ $section_classes = paddingClasses($spacing);
     <div class="container relative">
         <img class="left-1/2 absolute top-1/2 -translate-y-1/2 -translate-x-1/2 hidden md:block" src="<?php echo get_template_directory_uri(); ?>/assets/images/line-arrow.svg" alt="">
         <?php if (!empty($title)): ?>
-        <h5 class="font-bold text-[#252525] mb-5 sm:mb-10 md:mb-16 text-center">
+        <h4 class="text-gray-950 mb-5 sm:mb-10 md:mb-16 text-center">
             <?php echo esc_html($title); ?>
-        </h5>
+        </h4>
         <?php endif; ?>
         <div class="flex flex-col md:flex-row justify-between gap-10 md:gap-4 relative z-1">
             <?php if(!empty($boxes)): 
@@ -730,7 +738,7 @@ $section_classes = paddingClasses($spacing);
                 <img class="inline-block" src="<?php echo esc_url($icon); ?>" alt="">
 
                 <?php if (!empty($box_title)): ?>
-                    <p class="font-bold text-2xl pt-10 pb-2">
+                    <p class="font-bold text-2xl pt-10 pb-2 text-gray-950">
                         <?php echo esc_html($box_title); ?>
                     </p>
                 <?php endif; ?>
@@ -778,7 +786,7 @@ $section_classes = paddingClasses($spacing);
     $spacing = get_sub_field("spacing");
     $section_classes = paddingClasses($spacing);
 ?>
-<section class="<?php echo esc_attr($section_classes); ?> bg-radial-[at_0%_0%] px-4 sm:px-0 from-dark-blue via-cyan via-72% to-light-green text-center mx-4 rounded-3xl">
+<section class="<?php echo esc_attr($section_classes); ?> px-4 sm:px-0 bg-radial-[at_0%_0%] from-secondary via-primary via-72% to-terrtiary text-center mx-4 rounded-3xl">
     <?php if (!empty($title)): ?>
         <h4 class="text-white font-medium mb-3">
             <?php echo esc_html($title); ?>
@@ -795,7 +803,7 @@ $section_classes = paddingClasses($spacing);
             $client_designation = $slide['client_designation'] ?? '';
         ?>
 
-            <div class="h-full bg-terrtiary bg-[radial-gradient(122%_165%_at_124%_-24%,#25d7ff80_0%,#72eeda80_100%)] relative text-center rounded-[20px] item-inner py-5 md:py-10 lg:py-13 xl:py-14 2xl:py-17.5 px-5 sm:px-10 md:px-15 xl:px-20 2xl:px-25">
+            <div class="h-full bg-terrtiary bg-radial-[at_100%_0%] from-primary/50 to-terrtiary relative text-center rounded-[20px] item-inner py-5 md:py-10 lg:py-13 xl:py-14 2xl:py-17.5 px-5 sm:px-10 md:px-15 xl:px-20 2xl:px-25">
 
                 <?php if (!empty($image)): ?>
                     <img class="absolute top-0 -translate-y-1/2 size-25! left-1/2 -translate-x-1/2 rounded-full object-cover"
@@ -809,7 +817,7 @@ $section_classes = paddingClasses($spacing);
                     <i class="fa-solid fa-star text-[#FFD036]"></i>
                 </div>
                 <?php if (!empty($description)): ?>
-                    <div class="text-lg lg:text-xl xl:text-2xl 2xl:text-3xl"><?php echo wp_kses_post($description); ?></div>
+                    <div class="text-lg lg:text-xl xl:text-2xl 2xl:text-3xl text-gray-950"><?php echo wp_kses_post($description); ?></div>
                 <?php endif; ?>
 
                 <div class="mt-7.5">
@@ -967,7 +975,7 @@ $section_classes = paddingClasses($spacing);
 <section class="<?php echo esc_attr($section_classes); ?>">
     <div class="container relative z-1">
         <?php if (!empty($title)): ?>
-            <h5 class="text-gray-950 max-w-185 mx-auto text-center mb-6 md:mb-8 xl:mb-12.5"><?php echo esc_html($title); ?></h5>
+            <h5 class="text-gray-950 max-w-[730px] mx-auto text-center mb-6 md:mb-8 xl:mb-12.5"><?php echo wp_kses_post($title); ?></h5>
         <?php endif; ?>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 xl:gap-10 self-center">
 
@@ -980,7 +988,7 @@ $section_classes = paddingClasses($spacing);
                 $item_desc = $item['description'] ?? '';
             ?>
 
-            <div class="<?= $index === 1 ? 'bg-radial-[at_0%_100%] from-dark-blue via-cyan via-72% to-light-green' : 'bg-terrtiary' ?> rounded-[20px] p-8">
+            <div class="<?= $index === 1 ? 'bg-radial-[at_0%_170%] from-secondary via-primary via-72% to-terrtiary' : 'bg-terrtiary' ?> rounded-[20px] p-8">
 
                 <?php if (!empty($count)): ?>
                     <p class="font-bold mb-5 sm:mb-10 text-4xl md:text-5xl lg:text-6xl xl:text-7xl <?= $index === 1 ? 'text-white' : 'text-[#132341]' ?>">
@@ -1062,10 +1070,10 @@ $section_classes = paddingClasses($spacing);
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-12 lg:gap-18 2xl:gap-24">
             <div class="self-center">
                 <?php if (!empty($tagline)): ?>
-                    <p class="text-2xl"><?php echo esc_html($tagline); ?></p>
+                    <p class="text-2xl text-gray-950"><?php echo esc_html($tagline); ?></p>
                 <?php endif; ?>
                 <?php if (!empty($title)): ?>
-                    <h4 class="font-medium mt-2 mb-5 leading-tight">
+                    <h4 class="font-medium mt-2 mb-5 leading-tight text-gray-950">
                         <?php echo esc_html($title); ?>
                     </h4>
                 <?php endif; ?>
@@ -1157,9 +1165,9 @@ $section_classes = paddingClasses($spacing);
 <section class="<?php echo esc_attr($section_classes); ?>">
     <div class="container">
         <div class="grid grid-cols-12 gap-3 sm:gap-4 lg:gap-5 xl:gap-7.5">
-            <div class="col-span-12 xl:col-span-8 bg-terrtiary/50 rounded-2xl p-10">
+            <div class="col-span-12 xl:col-span-8 bg-terrtiary/20 rounded-2xl p-10">
                 <?php if (!empty($title)): ?>
-                    <h3 class="font-medium"><?php echo esc_html($title); ?></h3>
+                    <h3 class="font-medium text-gray-950"><?php echo esc_html($title); ?></h3>
                 <?php endif; ?>
             </div>
             <?php if(!empty($lists)): 
@@ -1167,10 +1175,10 @@ $section_classes = paddingClasses($spacing);
                 $list_text = $item['list_text'] ?? '';
                 $icon = $item['icon'] ?? '';
             ?>
-            <div class="col-span-12 sm:col-span-6 xl:col-span-4 bg-terrtiary/50 rounded-2xl p-10">
+            <div class="col-span-12 sm:col-span-6 xl:col-span-4 bg-terrtiary/20 rounded-2xl p-10">
                 <img class="inline-block mb-5" src="<?php echo esc_html($icon); ?>" alt="">
                 <?php if (!empty($list_text)): ?>
-                    <p class="text-2xl font-semibold text-gray-950">
+                    <p class="text-2xl font-bold text-gray-950">
                         <?php echo esc_html($list_text); ?>
                     </p>
                 <?php endif; ?>
@@ -1230,11 +1238,11 @@ $section_classes = paddingClasses($spacing);
     <div class="container">
 
         <?php if (!empty($tagline)) : ?>
-            <div class="text-center text-2xl"><?php echo esc_html($tagline); ?></div>
+            <div class="text-center text-2xl text-gray-950"><?php echo esc_html($tagline); ?></div>
         <?php endif; ?>
 
         <?php if (!empty($title)) : ?>
-            <h4 class="text-center font-medium mt-2 leading-tight mb-4 sm:mb-8 xl:mb-14 max-w-132.5 mx-auto">
+            <h4 class="text-center font-medium text-gray-950 mt-2 leading-tight mb-4 sm:mb-8 xl:mb-14 max-w-132.5 mx-auto">
                 <?php echo esc_html($title); ?>
             </h4>
         <?php endif; ?>
@@ -1257,20 +1265,20 @@ $section_classes = paddingClasses($spacing);
             ?>
 
             <div class="item h-full">
-                <div class="p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 rounded-4xl h-full flex flex-col <?php echo ($index == 1) ? 'bg-radial-[at_0%_100%] from-dark-blue via-cyan via-72% to-light-green text-white' : 'bg-terrtiary'; ?>">
+                <div class="p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 rounded-4xl h-full flex flex-col <?php echo ($index == 1) ? 'bg-radial-[at_0%_170%] from-secondary via-primary via-72% to-terrtiary text-white' : 'bg-terrtiary'; ?>">
 
                     <div class="pricing_box-type">
 
                         <?php if (!empty($box_title)) : ?>
-                            <p class="font-semibold text-lg lg:text-2xl"><?php echo esc_html($box_title); ?></p>
+                            <p class="font-semibold text-lg lg:text-2xl <?php echo ($index == 1) ? 'text-white' : 'text-gray-950'; ?>"><?php echo esc_html($box_title); ?></p>
                         <?php endif; ?>
 
                         <?php if (!empty($price)) : ?>
-                            <p class="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-extrabold my-2 lg:my-4"><?php echo esc_html($price); ?></p>
+                            <p class="text-xl md:text-2xl <?php echo ($index == 1) ? 'text-white' : 'text-gray-950'; ?> lg:text-3xl xl:text-4xl 2xl:text-5xl font-extrabold my-2 lg:my-4"><?php echo esc_html($price); ?></p>
                         <?php endif; ?>
 
                         <?php if (!empty($box_tagline)) : ?>
-                            <p class="font-semibold text-lg lg:text-2xl"><?php echo esc_html($box_tagline); ?></p>
+                            <p class="font-semibold text-lg <?php echo ($index == 1) ? 'text-white' : 'text-gray-950'; ?> lg:text-2xl"><?php echo esc_html($box_tagline); ?></p>
                         <?php endif; ?>
 
                         <?php if(!empty($lists)) : ?>
@@ -1357,7 +1365,7 @@ $section_classes = paddingClasses($spacing);
             </div>
         <?php endif; ?>
         <?php if (!empty($title)) : ?>
-            <h4 class="text-center font-medium mt-2 mb-2 leading-tight">
+            <h4 class="text-center font-medium mt-2 mb-2 leading-tight text-gray-950">
                 <?php echo esc_html($title); ?>
             </h4>
         <?php endif; ?>
@@ -1394,7 +1402,7 @@ $section_classes = paddingClasses($spacing);
             <div class="flex flex-col p-7">
 
                 <?php if (!empty($team_name)) : ?>
-                    <p class="font-semibold text-2xl">
+                    <p class="font-semibold text-2xl text-gray-950">
                         <?php echo esc_html($team_name); ?>
                     </p>
                 <?php endif; ?>
@@ -1481,7 +1489,7 @@ $section_classes = paddingClasses($spacing);
     }
 ?>
 
-<section class="lg:mx-4 rounded-3xl bg-radial-[at_0%_0%] from-dark-blue via-cyan via-72% to-light-green text-white <?php echo esc_attr($section_classes); ?> overflow-hidden">
+<section class="lg:mx-4 rounded-3xl bg-radial-[at_0%_0%] from-secondary via-primary via-72% to-terrtiary text-white <?php echo esc_attr($section_classes); ?> overflow-hidden">
     <div class="container">
         <div class="grid grid-cols-12 gap-8">
 
@@ -1596,7 +1604,7 @@ $section_classes = paddingClasses($spacing);
 <section class="<?php echo esc_attr($section_classes); ?> bg-terrtiary rounded-3xl mx-4">
     <div class="container">
         <?php if(!empty($title)): ?>
-            <h4 class="text-center font-medium mt-2 mb-2 leading-tight">
+            <h4 class="text-center font-medium mb-2 leading-tight text-gray-950">
                 <?php echo esc_html($title); ?>
             </h4>
         <?php endif; ?>
@@ -1902,7 +1910,7 @@ $section_classes = paddingClasses($spacing);
                     $thumb     = get_the_post_thumbnail_url($post_id);
             ?>
             <a href="<?php the_permalink(); ?>" class="rounded-[20px] relative block overflow-hidden group">
-                <span class="hidden h-1/2 xl:block bottom-0 z-1 bg-linear-to-t from-black/90 to-black/0 group-hover:bg-[linear-gradient(180deg,#25d7ff00_0%,#25d7ff80_30%)] absolute w-full"></span>
+                <span class="hidden h-1/2 xl:block bottom-0 z-1 bg-linear-to-b from-black/0 to-black/90 group-hover:from-primary/0 group-hover:from-0 group-hover:to-primary/80 absolute w-full"></span>
                 <?php if ($thumb) : ?>
                     <img src="<?php echo esc_url($thumb); ?>" 
                             alt="<?php echo esc_attr(get_the_title()); ?>" 
@@ -2054,7 +2062,7 @@ $section_classes = paddingClasses($spacing);
         <?php endif; ?>
 
         <?php if (!empty($section_title)) : ?>
-            <h4 class="text-center font-medium mt-2 mb-8 leading-tight max-w-120 mx-auto">
+            <h4 class="text-center font-medium mt-2 mb-8 leading-tight max-w-120 mx-auto text-gray-950">
                 <?php echo esc_html($section_title); ?>
             </h4>
         <?php endif; ?>
@@ -2083,9 +2091,9 @@ $section_classes = paddingClasses($spacing);
                 <div id="accordion_<?php echo esc_attr($i); ?>"
                         data-kt-accordion-toggle="true"
                         aria-controls="accordion_cont_<?php echo esc_attr($i); ?>"
-                        class="kt-accordion-toggle rounded-2xl px-6 py-5 font-semibold text-lg md:text-xl xl:text-2xl">
+                        class="kt-accordion-toggle rounded-2xl px-6 py-5 font-bold text-lg md:text-xl xl:text-2xl">
 
-                    <span><?php echo esc_html($faq_title); ?></span>
+                    <span class="text-gray-950"><?php echo esc_html($faq_title); ?></span>
 
                     <span class="kt-accordion-indicator w-auto! h-auto!">
                         <span class="kt-accordion-indicator-on w-auto! h-auto!">
@@ -2236,7 +2244,7 @@ $section_classes = paddingClasses($spacing);
             $title       = $item['title'] ?? '';
             $description = $item['description'] ?? '';
         ?>
-        <div class="bg-terrtiary p-8 rounded-[20px]">
+        <div class="bg-terrtiary/20 p-8 rounded-[20px]">
             <img class="size-12.5" src="<?php echo esc_html($icon); ?>">
             <?php if (!empty($title)) : ?>
                 <p class="text-gray-950 font-bold text-2xl pt-3 pb-2">

@@ -40,7 +40,7 @@ if (!empty($banner_posts)) {
 if ($show_banner) :
 
     $thumbnail = get_the_post_thumbnail_url($current_id, 'full');
-    $default_image = get_template_directory_uri() . '/assets/images/default-banner.jpg';
+    $default_image = get_template_directory_uri() . '/assets/images/default-banner.png';
     $bg_image = $thumbnail ? $thumbnail : $default_image;
 ?>
 
@@ -109,7 +109,7 @@ $section_class = paddingClasses($spacing);
 
 
 <?php if ( get_the_content() ) : ?>
-<section class="pt-8 md:pt-12 lg:pt-18 xl:pt-20 2xl:pt-24">
+<section class="pt-8 md:pt-12 lg:pt-18 xl:pt-20 2xl:pt-24 pb-8 md:pb-12 lg:pb-18 xl:pb-20 2xl:pb-24">
   <div class="container editerData mx-auto">
       <?php echo the_content(); ?>
       <?php if (is_single()){ ?>

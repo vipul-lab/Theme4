@@ -56,7 +56,7 @@ endif;
 <!-- ================= CONTENT SECTION ================= -->
 <section class="pt-8 md:pt-12 lg:pt-18 xl:pt-20 2xl:pt-24 pb-8 md:pb-12 lg:pb-18 xl:pb-20 2xl:pb-24">
     <div class="container">
-        <h4 class="font-semibold mb-3 md:mb-7 lg:mb-10">Open Positions</h4>
+        <h4 class="font-semibold mb-3 md:mb-7 lg:mb-10 text-gray-950">Open Positions</h4>
         <?php 
         $career_items = get_field('career_item');
         if (!empty($career_items) && is_array($career_items)) : 
@@ -88,7 +88,7 @@ endif;
                     <div class="flex justify-between w-full">
                         <div>
                             <?php if ($job_title): ?>
-                            <p class="text-2xl font-medium mb-1"><?php echo esc_html($job_title); ?></p>
+                            <p class="text-2xl font-medium mb-1 text-gray-950"><?php echo esc_html($job_title); ?></p>
                             <?php endif; ?>
                             <?php if ($location): ?>
                             <p><i class="fa-solid fa-location-dot mr-2"></i><?php echo esc_html($location); ?></p>
@@ -96,7 +96,7 @@ endif;
                         </div>
                         <div>
                             <?php if ($experience): ?>
-                            <p class="text-2xl font-medium mb-1">Exp.: <?php echo esc_html($experience); ?> yrs</p>
+                            <p class="text-2xl font-medium mb-1 text-gray-950">Exp.: <?php echo esc_html($experience); ?> yrs</p>
                             <p><i class="fa-solid fa-clock mr-2"></i><?php echo ($full_time__part_time) ? 'Full Time' : 'Part Time'; ?></p>
                             <?php endif; ?>
                         </div>
